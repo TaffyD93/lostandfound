@@ -1,0 +1,376 @@
+@import url("https://fonts.googleapis.com/css>family=Montserrat:500");
+:root {
+  --main-radius: 5px;
+  --main-padding: 5px;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+}
+
+/* Grid configuration for the whole website */
+.container {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 0.5fr 2.5fr 0fr;
+  grid-template-rows: 0.2fr 1.5fr 9fr 0.8fr;
+  grid-template-areas:
+    "nav nav nav nav"
+    "main main main main"
+    "sidebar content1 content2 content3"
+    "footer footer footer footer";
+  font-weight: 800;
+  font-size: 12px;
+  color: #000000fa;
+  text-align: center;
+}
+
+/* Navigation */
+nav {
+  background-color: #c5c5c51b;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  grid-area: nav;
+  padding: 20px 2%;
+  border-bottom: 3px solid #00A06E;
+}
+
+.logo {
+  cursor: pointer;
+  margin-right: auto;
+}
+
+.fa-solid, .fas {
+  font-weight: 900;
+  color: #153432;
+}
+
+.nav__links {
+  list-style: none;
+}
+
+.nav__links li {
+  display: inline-block;
+  padding: 0px 30px;
+}
+
+.nav__links li a {
+  transition: all 0.3s ease 0s;
+}
+
+.nav__links li a:hover {
+  color: rgb(0 191 143);
+}
+
+li,
+a,
+button {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 200;
+  font-size: 25px;
+  color: #153432;
+  text-decoration: none;
+  margin-right: 30px;
+}
+
+/* Main container */
+main {
+  background-color: #c5c5c51b;
+  grid-area: main;
+  padding-top: var(--main-padding);
+  border-bottom: 3px solid #00A06E;
+}
+
+section#hero {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+  color: black;
+}
+
+#hero h1 {
+  font-size: 2.5rem;
+  font-weight: 200;
+  display: inline-block;
+  margin-left: -10em;
+  padding: 1%;
+  color: #153432;
+}
+
+/* Posts toggle */
+.toggle {
+  margin-left: -34em;
+  --width: 100px;
+  --height: calc(var(--width) / 2.3);
+  position: relative;
+  display: inline-block;
+  width: var(--width);
+  height: var(--height);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+  border-radius: var(--height);
+  cursor: pointer;
+}
+
+.toggle input {
+  display: none;
+}
+
+.toggle .slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--height);
+  background-color: #ccc;
+  transition: all 0.4s ease-in-out;
+}
+
+.toggle .slider::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(var(--height));
+  height: calc(var(--height));
+  border-radius: calc(var(--height) / 2);
+  background-color: #fff;
+  box-shadow: inset 0px 0px 12px 0px rgb(0 191 143);
+  transition: all 0.4s ease-in-out;
+}
+
+.toggle input:checked + .slider {
+  background-color: #00A06E;
+}
+
+.toggle input:checked + .slider::before {
+  transform: translateX(calc(var(--width) - var(--height)));
+}
+
+.toggle .labels {
+  position: absolute;
+  top: 15px;
+  left: 0;
+  width: 100%;
+  font-size: 13px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 100;
+  transition: all 0.4s ease-in-out;
+}
+
+.toggle .labels::after {
+  content: attr(data-off);
+  position: absolute;
+  right: 5px;
+  color: #4d4d4d;
+  opacity: 1;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+  transition: all 0.4s ease-in-out;
+}
+
+.toggle .labels::before {
+  content: attr(data-on);
+  position: absolute;
+  left: 10px;
+  color: #ffffff;
+  opacity: 0;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.4);
+  transition: all 0.4s ease-in-out;
+}
+
+.toggle input:checked ~ .labels::after {
+  opacity: 0;
+}
+
+.toggle input:checked ~ .labels::before {
+  opacity: 1;
+}
+
+/* Categories sidebar */
+#sidebar {
+  background-color: #c5c5c51b;
+  grid-area: sidebar;
+  padding-top: var(--main-padding);
+  border-right: 3px solid #00A06E;
+}
+
+#sidebar h1 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 30px;
+  color: #0c3e05;
+}
+
+#sidebar a {
+  font-family: Montserrat, sans-serif;
+  font-size: 17px;
+  color: #153432;
+  opacity: 0.6;
+  text-align: left;
+  padding-top: 25px;
+  padding-left: 15px;
+  line-height: 20px;
+  
+}
+
+/* Posts Sorting */
+.sort {
+  font-family: Montserrat, sans-serif;
+  color: #153432;
+  opacity: 0.6;
+  padding-bottom: 50em;
+  margin: 10px -150px 40px -130px;
+}
+
+.sort button {
+  margin-left: 20px;
+  font-size: 20px;
+}
+
+/* Posts */
+a {
+  text-align: center;
+  display: block;
+  font-family: inherit;
+  text-decoration: none;
+  margin: 1rem;
+}
+
+#content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0px;
+  flex-wrap: wrap;
+}
+
+.post-box {
+  width: 350px;
+  background-color: #00A06E;;
+  border: 1px solid #00A06E;
+  margin: 40px;
+}
+
+.post-box h1{
+  font-size: 20px;
+  line-height: 24px;
+  color: #FFFFFF;
+  margin-top: 30px;
+}
+
+.post-img {
+  width: 100%;
+  height: auto;
+}
+
+.post-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.post-text {
+  margin: 20px 20px 20px 20px;
+}
+
+.post-box .fa-solid, .fas {
+  font-weight: 900;
+  color: #e7ebeb;
+}
+/* Location icon */
+.fa-location-dot:before, .fa-map-marker-alt:before {
+  content: "\f3c5";
+  color: #FFFFFF;
+  font-size: 25px;
+  margin-left: 10px;
+}
+
+/* Date */
+input {
+  float: right;
+  margin: 0px 0px 0px 50px;
+}
+
+/* Footer */
+footer {
+  background-color: #c5c5c51b;
+  grid-area: footer;
+  padding-top: var(--main-padding);
+}
+
+.row{
+	display: flex;
+}
+ul{
+	list-style: none;
+}
+
+.footer-col{
+   width: 25%;
+   background: #153432;
+}
+.footer-col h4{
+	font-size: 18px;
+	color: #ffffff;
+	text-transform: capitalize;
+	margin-bottom: 35px;
+	font-weight: 500;
+	position: relative;
+}
+
+.footer-col p{
+  font-size: 12px;
+  color: #ffffff;
+  font-weight: 500;
+  margin-top: 70px;
+}
+
+.footer-col ul li:not(:last-child){
+	margin-bottom: 10px;
+}
+.footer-col ul li a{
+	font-size: 16px;
+	text-transform: capitalize;
+	color: #ffffff;
+	text-decoration: none;
+	font-weight: 300;
+	color: #bbbbbb;
+	display: block;
+	transition: all 0.3s ease;
+}
+.footer-col ul li a:hover{
+	color: #ffffff;
+	padding-left: 8px;
+}
+
+/*grid responsiveness*/
+@media only screen and (max-width: 550px) {
+  .container {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.4fr 0.4fr 2.2fr 1.2fr 1.2fr 1.2fr 1fr;
+    grid-template-areas:
+      "nav"
+      "sidebar"
+      "main"
+      "content1"
+      "content2"
+      "footer";
+  }
+}
+
+/*responsive footer*/
+@media(max-width: 767px){
+  .footer-col{
+    width: 50%;
+    margin-bottom: 30px;
+}
+}
+@media(max-width: 574px){
+  .footer-col{
+    width: 100%;
+}
+}
