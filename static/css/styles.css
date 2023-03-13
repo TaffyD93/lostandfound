@@ -246,7 +246,21 @@ a {
   margin: 20px 0px;
   flex-wrap: wrap;
 }
+input[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
 
+input[type="submit"]:hover {
+  font-family: "Montserrat", sans-serif;
+  font-size: 30px;
+  color: #0c3e05;
+}
 .post-box {
   width: 350px;
   background-color: #00A06E;;
@@ -272,9 +286,23 @@ a {
   object-fit: cover;
   object-position: center;
 }
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+label {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #FFFFFF;
+  
+}
 
 .post-text {
   margin: 20px 20px 20px 20px;
+  color: #0c3e05;
 }
 
 .post-box .fa-solid, .fas {
