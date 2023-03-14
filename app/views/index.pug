@@ -1,35 +1,13 @@
-// extends layout
-
-// block content
-    h1 #{heading}
-    p first paragraph xxx
-
-doctype html
-head
-  meta(charset='UTF-8')
-  meta(http-equiv='X-UA-Compatible' content='IE=edge')
-  meta(name='viewport' content='width=device-width, initial-scale=1.0')
-  script(src='https://kit.fontawesome.com/88899f4625.js' crossorigin='anonymous')
-  link(rel="stylesheet", href="/css/styles.css")
-  title Document
-.container
-  // Navigation
-  nav
-    img.logo(src='Logo.png' alt='logo')
-    ul.nav__links
-      li
-        a(href='#') Log In
-      li
-        a(href='#') Sign In
-    i.fa-solid.fa-circle-user(style='font-size: 40px')
+extends layout
+block content
   // Main container
   main
     section#hero
-      h1 ALL ITEMS
-      label.toggle
-        input(type='checkbox')
-        span.slider
-        span.labels(data-on='LOST' data-off='FOUND')
+        h1 ALL ITEMS
+        label.toggle
+          input(type='checkbox')
+          span.slider
+          span.labels(data-on='LOST' data-off='FOUND')
   // Sidebar container
   #sidebar
     h1 Categories
@@ -47,55 +25,33 @@ head
       button
         | Date Posted 
         i.fa-solid.fa-chevron-down
-    // Posts
-    .post-box
-      h1 NAME OF ITEM
-      .post-img
-      form(action='/upload', method='post', enctype='multipart/form-data')
-        label(for='image') Select an image to upload:
-        input(type='file', name='image', id='image', accept='image/*')
-        button(type='submit') Upload Photo
+        
+    .posts
+      // Posts
+      .post-box
+        h1 NAME OF ITEM
+        .post-img
+        form(action='/upload', method='post', enctype='multipart/form-data')
+          label(for='image') Select an image to upload:
+          input(type='file', name='image', id='image', accept='image/*')
+          .button-upload 
+            button(type='submit') Upload Photo
 
-      .post-text
-        i.fa-solid.fa-location-dot(style='font-size: 15px')      Location
-        input#start(type='date' name='trip-start' value='2018-07-22' min='2018-01-01' max='2018-12-31')
-    .post-box
-      h1 NAME OF ITEM
-      .post-img
-      form(action='/upload', method='post', enctype='multipart/form-data')
-        label(for='image') Select an image to upload:
-        input(type='file', name='image', id='image', accept='image/*')
-        button(type='submit') Upload Photo
-      .post-text
-        i.fa-solid.fa-location-dot(style='font-size: 15px')      Location
-        input#start(type='date' name='trip-start' value='2018-07-22' min='2018-01-01' max='2018-12-31')
-  // Footer
-  footer.footer
-    .row
-      .footer-col
-        h4 Connect with Us
-        ul
-          li
-            a(href='#') + 44 09786 456822
-          li
-            a(href='#') lostnfound4eva@rcm.co.uk
-          p &copy; 2023 Your Company Name. All Rights Reserved.
-      .footer-col
-        h4 About
-        ul
-          li
-            a(href='#') About us
-          li
-            a(href='#') Our Mission
-      .footer-col
-        h4 Help
-        ul
-          li
-            a(href='#') Help &amp; FAQs
-          li
-            a(href='#') Contact Us
-          li
-            a(href='#') Location &amp; Hours
-      .footer-col
-        .footer-col
-          img(src='gmaps.jpeg' width='370' height='230')
+        .post-text
+          i.fa-solid.fa-location-dot(style='font-size: 13px')      Location
+          input#start(type='date' name='trip-start' value='2018-07-22' min='2018-01-01' max='2018-12-31')
+
+      .post-box
+        h1 NAME OF ITEM
+        .post-img
+        form(action='/upload', method='post', enctype='multipart/form-data')
+          label(for='image') Select an image to upload:
+          input(type='file', name='image', id='image', accept='image/*')
+          .button-upload
+            button(type='submit') Upload Photo
+
+        .post-text
+          i.fa-solid.fa-location-dot(style='font-size: 15px')      Location
+          input#start(type='date' name='trip-start' value='2018-07-22' min='2018-01-01' max='2018-12-31')
+
+

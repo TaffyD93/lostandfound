@@ -1,0 +1,55 @@
+doctype html 
+head
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    script(src='https://kit.fontawesome.com/88899f4625.js' crossorigin='anonymous')
+    link(rel="stylesheet", href="/css/styles.css")
+    title Lost and found
+
+.container
+    nav
+        img.logo(src='public/Logo.png' alt='logo')
+        ul.nav__links
+            li
+                a(href='#') Log In
+            li
+                a(href='#') Sign In
+        i.fa-solid.fa-circle-user(style='font-size: 40px')
+            title #{title}
+
+    body
+        block content
+
+footer.footer
+.row
+    .footer-col
+        ul
+            h4 Connect with Us
+
+            li
+                a(href='#') + 44 09786 456822
+            li
+                a(href='#') lostnfound4eva@rcm.co.uk
+                    p &copy; 2023 Your Company Name. All Rights Reserved.
+    .footer-col
+        ul
+            h4 About 
+            li
+                a(href='#') About us
+            li
+                a(href='#') Our Mission
+    .footer-col
+        ul
+            h4 Help
+            li
+                a(href='#') Help &amp; FAQs
+            li
+                a(href='#') Contact Us
+            li
+                a(href='#') Location &amp; Hours
+    .footer-col
+    .footer-col
+        img(src='public/gmaps.jpeg' width='370' height='260')
+
+    
