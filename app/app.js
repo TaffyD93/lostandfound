@@ -1,6 +1,9 @@
 // Import express.js
 const express = require("express");
 
+/* // add routing
+const router = express.Router() */
+
 // Create express app
 var app = express();
 
@@ -32,11 +35,11 @@ app.get("/db_test", function(req, res) {
     });
 });
 
-// Create a route for /goodbye
-// Responds to a 'GET' request
-app.get("/goodbye", function(req, res) {
+
+app.get("/userprofile", function(req, res) {
     res.send("Goodbye world!");
 });
+
 
 // Create a dynamic route for /hello/<name>, where name is any value provided by user
 // At the end of the URL
@@ -53,3 +56,6 @@ app.get("/hello/:name", function(req, res) {
 app.listen(3000,function(){
     console.log(`Server running at http://127.0.0.1:3000/`);
 });
+
+
+
