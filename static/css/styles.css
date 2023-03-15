@@ -221,20 +221,6 @@ section#hero {
   line-height: 20px; 
 }
 
-/* Posts Sorting */
-.sort {
-  font-family: Montserrat, sans-serif;
-  color: #153432;
-  opacity: 0.6;
-  padding-bottom: 40em;
-  margin: 20px -150px 40px -200px;
-}
-
-.sort button {
-  margin-left: 20px;
-  font-size: 20px;
-}
-
 /* Posts */
 a {
   text-align: center;
@@ -246,10 +232,27 @@ a {
 
 #content {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   grid-area: content;
   flex-wrap: wrap;
+}
+
+/* Posts Sorting */
+.sort {
+  display: flex;
+  font-family: Montserrat, sans-serif;
+  color: #153432;
+  opacity: 0.6;
+  font-size: 1em;
+  color: rgb(53, 53, 53);
+  padding: 50px;
+  margin-left: -1050px;
+}
+
+.sort button {
+  margin-left: 20px;
+  font-size: 20px;
 }
 
 .posts {
@@ -284,7 +287,14 @@ input[type="submit"]:hover {
   border-radius: 4px;
 }
 
-.post-box h1{
+.post-box-image {
+  background-color: white;
+  height: 190px;
+  width: 230px;
+  border-radius: 4px;
+}
+
+.post-box h2 {
   font-size: 20px;
   line-height: 24px;
   color: #FFFFFF;
@@ -329,17 +339,20 @@ label {
   color: #0c3e05;
 }
 
+.post-location {
+  display: flex;
+  align-items: center;
+}
+
+.post-location > p {
+  margin-left: 5px;
+}
+
 .post-box .fa-solid, .fas {
   font-weight: 900;
   color: #e7ebeb;
 }
-/* Location icon */
-.fa-location-dot:before, .fa-map-marker-alt:before {
-  content: "\f3c5";
-  color: #FFFFFF;
-  font-size: 25px;
-  margin-left: 10px;
-}
+
 
 /* Date */
 input {
@@ -351,6 +364,7 @@ input {
 footer {
   width: 100%;
   background-color: #c5c5c51b;
+  grid-area: footer;
 }
 
 .row{

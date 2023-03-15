@@ -22,28 +22,27 @@ block content
   // Content container
   #content
     .sort
-      i.fa-solid.fa-location-dot(style='font-size: 15px')      Sort By
+      p Sort By
       button
         | Date Posted 
         i.fa-solid.fa-chevron-down
-        
+    
+    // make posts clickable
     .posts
       // Posts
-
       for item in data
-        div #{item.item_name}
-     
-      //.post-box
-        h1 ${title}
+        .post-box
+          h2 #{item.item_name}
+          .post-box-image 
+            p image goes here 
+          .post-text
+            .post-location
+              img(src='public/location.png' width='17' height='20')
+              p #{item.location}
+            div #{item.date}
 
-        replace: img src tag
-        div image goes here 
 
-        .post-text
-          i.fa-solid.fa-location-dot(style='font-size: 15px')      ${location}
-          p date goes here
 
-      
 
 
 
