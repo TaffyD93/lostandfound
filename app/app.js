@@ -22,8 +22,13 @@ const db = require('./services/db');
 
 // Create a route for root - /
 app.get("/", function(req, res) {
-    res.render("index", {'title':'My index page', 'heading':'My heading'});
+    var sql = 'select * from Posts';
+    db.query(sql).then(results => {
+        // send results to index template
+        res.render('index', {data: results})
+    })
 });
+
 
 // Create a route for testing the db
 app.get("/db_test", function(req, res) {

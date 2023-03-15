@@ -1,5 +1,6 @@
 extends layout
 block content
+  - console.log("SE HER", data) 
   // Main container
   main
     section#hero
@@ -28,30 +29,21 @@ block content
         
     .posts
       // Posts
-      .post-box
-        h1 NAME OF ITEM
-        .post-img
-        form(action='/upload', method='post', enctype='multipart/form-data')
-          label(for='image') Select an image to upload:
-          input(type='file', name='image', id='image', accept='image/*')
-          .button-upload 
-            button(type='submit') Upload Photo
+
+      for item in data
+        div #{item.item_name}
+     
+      //.post-box
+        h1 ${title}
+
+        replace: img src tag
+        div image goes here 
 
         .post-text
-          i.fa-solid.fa-location-dot(style='font-size: 13px')      Location
-          input#start(type='date' name='trip-start' value='2018-07-22' min='2018-01-01' max='2018-12-31')
+          i.fa-solid.fa-location-dot(style='font-size: 15px')      ${location}
+          p date goes here
 
-      .post-box
-        h1 NAME OF ITEM
-        .post-img
-        form(action='/upload', method='post', enctype='multipart/form-data')
-          label(for='image') Select an image to upload:
-          input(type='file', name='image', id='image', accept='image/*')
-          .button-upload
-            button(type='submit') Upload Photo
+      
 
-        .post-text
-          i.fa-solid.fa-location-dot(style='font-size: 15px')      Location
-          input#start(type='date' name='trip-start' value='2018-07-22' min='2018-01-01' max='2018-12-31')
 
 

@@ -1,0 +1,14 @@
+meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    script(src='https://kit.fontawesome.com/88899f4625.js' crossorigin='anonymous')
+    link(rel="stylesheet", href="/css/styles.css")
+    title post 
+
+    .post
+        h2 ${title} // name of lost item 
+        div image goes here //img(src='' width='370' height='260')
+
+        .post-text
+          i.fa-solid.fa-location-dot(style='font-size: 15px')      Location
+          input#start(type='date' name='trip-start' value='2018-07-22' min='2018-01-01' max='2018-12-31')
