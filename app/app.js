@@ -35,9 +35,10 @@ app.get("/db_test", function(req, res) {
     });
 });
 
-
+// Create a route for userprofile
+// => "/userprofile/:username"
 app.get("/userprofile", function(req, res) {
-    res.send("Goodbye world!");
+    res.render("userprofile", {'title':'My index page', 'heading':'My heading'});
 });
 
 
