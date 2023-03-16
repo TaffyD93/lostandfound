@@ -1,4 +1,41 @@
 extends layout
 block content
-    
-    // WRITE CODE HERE
+
+    // Main container
+    main
+    section#hero
+        h2 Settings
+        h1 My Posts
+        img(src='public/Untitled.png' width='100' height='70')
+
+    // Sidebar container
+    #sidebar
+        i.fa-solid.fa-circle-user(style='font-size:110px')
+        h1 User Names
+        span Items Found
+        span Items Received
+        p
+            | Lorem ipsum dolor sit amet, consectetur adipisicing       elit. Ea, repellat dolore nisi, id omnis, necessitatibus     mollitia distinctio delectus soluta eveniet accusantium       quas veritatis aliquam! Ea architecto beatae inventore       qui quisquam?
+        .icon
+            i.fa.fa-thumbs-up(style='font-size:10px')
+            | 90 Likes 
+            br
+            |  Upvotes
+            i.fa.fa-thumbs-down(style='font-size:10px')
+            | 7 Deslikes 
+            br
+            |  Downotes
+            
+    // make posts clickable
+    .posts
+      // Posts
+      for item in data
+        .post-box
+          h2 #{item.item_name}
+          .post-box-image 
+            p image goes here 
+          .post-text
+            .post-location
+              img(src='public/location.png' width='17' height='20')
+              p #{item.location}
+            div #{item.date}
