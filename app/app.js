@@ -42,9 +42,15 @@ app.get("/db_test", function(req, res) {
 
 // Create a route for userprofile
 // => "/userprofile/:username"
+// Create a route for root - /
 app.get("/userprofile", function(req, res) {
-    res.render("userprofile", {'title':'My index page', 'heading':'My heading'});
+    var sql = 'select * from Posts';
+    db.query(sql).then(results => {
+        // send results to index template
+        res.render('userprofile', {data: results})
+    })
 });
+
 
 
 // Create a dynamic route for /hello/<name>, where name is any value provided by user
