@@ -12,11 +12,11 @@ body {
 
 /* Grid configuration for the whole website */
 .container {
-  height: 110vh;
+  height: 100%;
   width: 100%;
   display: grid;
   grid-template-columns: 0.5fr 2.5fr 0fr;
-  grid-template-rows: 0.2fr 1.5fr 9fr 0.8fr;
+  grid-template-rows: auto;
   grid-template-areas:
     "nav nav nav nav"
     "main main main main"
@@ -42,6 +42,11 @@ nav {
 .logo {
   cursor: pointer;
   margin-right: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding-left: 35px;
+  padding-top: 40px;
 }
 
 .fa-solid, .fas {
