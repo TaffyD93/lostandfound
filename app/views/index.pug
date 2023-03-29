@@ -13,36 +13,31 @@ block content
   #sidebar
     h1 Categories
     ui
-      a(href='#') All Categories
-      a(href='#') Clothing
-      a(href='#') Electronics
-      a(href='#') Sport Equip.
-            a(href='#') Student ID
-      a(href='#') Other
+      a(href='#' class='filter' data-category='all') All Categories
+      a(href='#' class='filter' data-category='Clothing') Clothing
+      a(href='#' class='filter' data-category='Electronics') Electronics
+      a(href='#' class='filter' data-category='Sports Equip') Sport Equip.
+      a(href='#' class='filter' data-category='Student ID') Student ID
+      a(href='#' class='filter' data-category='Other') Other
   // Content container
   #content
     .sort
       p Sort By
-      button
+      button#sort-by-date-btn(onclick="sortPosts('date')")
         | Date Posted 
         i.fa-solid.fa-chevron-down
-    
+
     // make posts clickable
-    .posts
-      // Posts
-      for item in data
-        .post-box
-          h2 #{item.item_name}
-          .post-box-image 
-            p image goes here 
-          .post-text
-            .post-location
-              img(src='public/location.png' width='17' height='20')
-              p #{item.location}
-            div #{item.date}
-
-
-
-
-
-
+    .posts#post-container
+        // Posts
+        for item in data
+          .post-box(data-category=item.category, data-category2=item.category2, data-type=item.type)
+            h2 #{item.item_name}
+            .post-box-image 
+              p image goes here 
+            .post-text
+              .post-location
+                img(src='public/location.png' width='17' height='20')
+                p #{item.location}
+              div #{item.date}
+    script(src='public/filtering.js')
