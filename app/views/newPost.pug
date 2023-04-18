@@ -7,7 +7,14 @@ meta(charset='UTF-8')
 
     .post
         h2 ${title} // name of lost item 
-        div image goes here //img(src='' width='370' height='260')
+       .post-box-image
+          <form method="POST" action="/upload" enctype="multipart/form-data">
+                <input type="file" name="image" />
+                <button type="submit">Upload</button>
+              </form>
+              if imagePath
+                img(src=`/${imagePath}`)
+                input(type='submit', value='Post')
 
         .post-text
           i.fa-solid.fa-location-dot(style='font-size: 15px')      Location

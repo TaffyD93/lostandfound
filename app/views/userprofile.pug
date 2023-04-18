@@ -35,6 +35,12 @@ block content
           h2 #{item.item_name}
           .post-box-image 
             p image goes here 
+               form(action="/upload", method="post", enctype="multipart/form-data")
+            input(type="file", name="photo")
+            button(type="submit") Upload
+             if imagePath
+              img(src=`/${imagePath}`)
+              input(type='submit', value='Post')
           .post-text
             .post-location
               img(src='public/location.png' width='17' height='20')

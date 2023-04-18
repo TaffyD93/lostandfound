@@ -34,7 +34,14 @@ block content
           .post-box(data-category=item.category, data-category2=item.category2, data-type=item.type)
             h2 #{item.item_name}
             .post-box-image 
-              p image goes here 
+              p image goes here:
+              <form method="POST" action="/upload" enctype="multipart/form-data">
+                <input type="file" name="image" />
+                <button type="submit">Upload</button>
+              </form>
+              if imagePath
+                img(src=`/${imagePath}`)
+                input(type='submit', value='Post')
             .post-text
               .post-location
                 img(src='public/location.png' width='17' height='20')
