@@ -19,26 +19,38 @@ block content
       div.new-post-img
 
       // action('/newPost.js')
-      // enctype => multipart/form-data for images upload
-      form.new-post-input(action='/app.js', method="post", enctype='multipart/form-data') 
-        label.new-post-input-item(for="itemName") Item Name 
-        input(type="text", name="itemName", id="itemName")
+      // enctype => multipart/form-data for images upload : MULTER IN APP.JS UPDATE : enctype='multipart/form-data'
+      form.new-post-input(action="/new-post-form", method="post") 
+        label.new-post-input-item(for="item_name") Item Name 
+        input(type="text", name="item_name")
 
         label.new-post-input-item(for="location") Location 
-        input(type="text", name="location", id="location")
+        input(type="text", name="location")
 
         label.new-post-input-item(for="description") Description
-        input(type="text", name="description", id="description")
+        input(type="text", name="description")
 
-        label.new-post-input-item(for="categories-dropwdown") Select category for item
-        select.new-post-dropdown(name="categories-dropdown")
-          option(value='placeholder') Select...
-          option(value='clothing') Clothing
-          option(value='electronics') Electronics
-          option(value='sports-equip') Sports Equip.
-          option(value='clothing') Clothing
-          option(value='student-id') Student ID
-          option(value='other') Other
+        section.new-post-checkboxes
+          // Make buttons instead 
+          div.new-post-checkbox 
+            input(type="checkbox" name="clothes")
+            label(for="clothes") Clothing
+
+          div.new-post-checkbox 
+            input(type="checkbox" name="electronics")
+            label(for="electronics") Electronics
+
+          div.new-post-checkbox 
+            input(type="checkbox" name="sport-equp")
+            label(for="sport-equp") Sport Equip.
+
+          div.new-post-checkbox 
+            input(type="checkbox" name="student-id")
+            label(for="student-id") Student ID
+
+          div.new-post-checkbox 
+            input(type="checkbox" name="clothes")
+            label(for="other") Other
 
         button.new-post-input-button(type="submit") POST
 
@@ -76,3 +88,4 @@ block content
             div #{item.date}
 
     script(src='/public/script/newPost.js')
+    
