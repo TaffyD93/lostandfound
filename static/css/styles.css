@@ -473,7 +473,12 @@ ul{
 	font-weight: 500;
 	position: relative;
   text-align: center
+}
 
+#make-new-post-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
 }
 
 .footer-col p{
