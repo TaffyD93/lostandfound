@@ -3,6 +3,7 @@
 :root {
   --main-radius: 5px;
   --main-padding: 5px;
+  --main-color: #00A06E;
 }
 
 body {
@@ -36,7 +37,7 @@ nav {
   align-items: center;
   grid-area: nav;
   padding: 20px 2%;
-  border-bottom: 3px solid #00A06E;
+  border-bottom: 3px solid var(--main-color);
 }
 
 .logo {
@@ -86,7 +87,7 @@ button {
 main {
   background-color: #c5c5c51b;
   grid-area: main;
-  border-bottom: 3px solid #00A06E;
+  border-bottom: 3px solid var(--main-color);
 }
 
 section#hero {
@@ -124,7 +125,7 @@ section#user-hero {
   color: black;
   padding-left: 100px;
   display: flex;
-  background-color: #00A06E;
+  background-color: var(--main-color);
   padding-top:20px;
 }
 
@@ -189,7 +190,7 @@ padding-right: 350px;
 }
 
 .toggle input:checked + .slider {
-  background-color: #00A06E;
+  background-color: var(--main-color);
 }
 
 .toggle input:checked + .slider::before {
@@ -240,13 +241,13 @@ padding-right: 350px;
   background-color: #c5c5c51b;
   grid-area: sidebar;
   padding: var(--main-padding);
-  border-right: 3px solid #00A06E;
+  border-right: 3px solid var(--main-color);
 }
 
 #sidebar-user {
   background-color: #c5c5c51b;
   padding-top: var(--main-padding);
-  border-right: 3px solid #00A06E;
+  border-right: 3px solid var(--main-color);
   padding-right: 40px;
   padding-top: 50px;
   padding-left: 20px;
@@ -367,8 +368,8 @@ input[type="submit"]:hover {
   flex-direction: column;
   align-items: center;
   width: 350px;
-  background-color: #00A06E;;
-  border: 1px solid #00A06E;
+  background-color: var(--main-color);;
+  border: 1px solid var(--main-color);
   margin: 30px;
   border-radius: 4px;
 }
@@ -473,6 +474,77 @@ ul{
 	font-weight: 500;
 	position: relative;
   text-align: center
+}
+
+/* NEW POST */
+.new-post {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 880px;
+  width: 800px;
+  top: 50;
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto; 
+  position: absolute;
+  /* background-color: var(--main-color); */
+  background-color: black;
+}
+
+.new-post-title {
+  color: white;
+  padding-left: 20px;
+  font-size: 2em;
+}
+
+.new-post-header {
+  top: 0;
+  position: absolute;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  border-bottom: 2px solid white;
+}
+
+.new-post-exit {
+  padding-right: 50px;
+}
+
+.new-post-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.new-post-input-item {
+  padding: 30px 0px 15px 0px;
+}
+
+.new-post-input-button {
+  padding: 2px 25px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.new-post-input-button:hover {
+  background-color: var(--main-color);
+}
+
+.new-post-dropdown {
+  padding: 10px 25px;
+  font-size: 1.8em;
+}
+
+.new-post-img {
+  width: 200px;
+  height: 200px;
+  border: 2px solid grey;
+  margin-top: 50px;
 }
 
 #make-new-post-btn {

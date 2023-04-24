@@ -8,7 +8,39 @@ block content
           h1 My Posts
           
           button#make-new-post-btn(onclick="makeNewPost()")
-            img(src='public/addIcon.png' width='95' height='95')
+            img(src='public/images/addIcon.png' width='95' height='95')
+    
+    section.new-post
+      div.new-post-header
+        h3.new-post-title NEW POST
+        img.new-post-exit(src='public/images/exit.png' width='50' height='50')
+      
+      // IMAGE GOES HERE
+      div.new-post-img
+
+      // action('/newPost.js')
+      // enctype => multipart/form-data for images upload
+      form.new-post-input(action='/app.js', method="post", enctype='multipart/form-data') 
+        label.new-post-input-item(for="itemName") Item Name 
+        input(type="text", name="itemName", id="itemName")
+
+        label.new-post-input-item(for="location") Location 
+        input(type="text", name="location", id="location")
+
+        label.new-post-input-item(for="description") Description
+        input(type="text", name="description", id="description")
+
+        label.new-post-input-item(for="categories-dropwdown") Select category for item
+        select.new-post-dropdown(name="categories-dropdown")
+          option(value='placeholder') Select...
+          option(value='clothing') Clothing
+          option(value='electronics') Electronics
+          option(value='sports-equip') Sports Equip.
+          option(value='clothing') Clothing
+          option(value='student-id') Student ID
+          option(value='other') Other
+
+        button.new-post-input-button(type="submit") POST
 
     // Sidebar container
     #sidebar-user
@@ -39,6 +71,8 @@ block content
             p image goes here 
           .post-text
             .post-location
-              img(src='public/location.png' width='17' height='20')
+              img(src='public/images/location.png' width='17' height='20')
               p #{item.location}
             div #{item.date}
+
+    script(src='/public/script/newPost.js')
