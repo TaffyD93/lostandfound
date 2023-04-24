@@ -17,6 +17,9 @@ app.use(express.static('styles'))
 // Add static files location
 app.use(express.static("static"));
 
+// get access to newPost module
+const { NewPost } = require("./models/newPost");
+
 // Get the functions in the db.js file to use
 const db = require('./services/db');
 
@@ -38,6 +41,30 @@ app.get("/userprofile", function(req, res) {
         // send results to index template
         res.render('userprofile', {data: results})
     })
+});
+
+// npm i body-parser 
+// make data from form readable => CHANGE TO MULTER WITH IMAGE
+// remove before merge
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// get data from inputform
+app.post("/new-post-form", async function(req, res) {
+    //const params = JSON.stringify(req.body.item_name);
+    params = req.body
+ 
+    var post = new NewPost(params.item_name);
+    console.log('params', params)
+    console.log('body', req.body)
+
+    try {
+        await post.setNewPost(params.item_name)
+        res.redirect('/userprofile');
+
+    } catch(error) {
+        console.log('error', error.message)
+    }   
 });
 
 
