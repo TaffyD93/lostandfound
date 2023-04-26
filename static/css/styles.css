@@ -535,8 +535,14 @@ ul{
   background-color: var(--main-color);
 }
 
-.new-post-dropdown {
-  padding: 10px 25px;
+.new-post-checkboxes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.new-post-checkbox {
+  display: flex;
+  align-items: center;
   font-size: 1.8em;
 }
 

@@ -15,14 +15,14 @@ block content
         h3.new-post-title NEW POST
         img.new-post-exit(src='public/images/exit.png' width='50' height='50')
       
-      // IMAGE GOES HERE
+      // IMAGE upload GOES HERE
       div.new-post-img
 
       // action('/newPost.js')
       // enctype => multipart/form-data for images upload : MULTER IN APP.JS UPDATE : enctype='multipart/form-data'
       form.new-post-input(action="/new-post-form", method="post") 
-        label.new-post-input-item(for="item_name") Item Name 
-        input(type="text", name="item_name")
+        label.new-post-input-item(for="name") Item Name 
+        input(type="text", name="name")
 
         label.new-post-input-item(for="location") Location 
         input(type="text", name="location")

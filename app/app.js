@@ -51,15 +51,29 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // get data from inputform
 app.post("/new-post-form", async function(req, res) {
-    //const params = JSON.stringify(req.body.item_name);
+    
+    /* 
+        1. find way to access user ID
+    */
+     
+    // params from form (attributes)
     params = req.body
  
-    var post = new NewPost(params.item_name);
+    var post = new NewPost(
+        params.name,
+        'DD/MM/YYYY',
+        'CATEGORY',
+        'CATEGORY2',
+        'UID',
+        params.description,
+        params.location
+    )
+
     console.log('params', params)
     console.log('body', req.body)
 
     try {
-        await post.setNewPost(params.item_name)
+        await post.storePostInDatabase(post)
         res.redirect('/userprofile');
 
     } catch(error) {
