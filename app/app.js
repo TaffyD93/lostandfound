@@ -53,7 +53,7 @@ function currentDate() {
     if (dd < 10) dd = '0' + dd;
     if (mm < 10) mm = '0' + mm;
 
-    const formattedToday = dd + '/' + mm + '/' + yyyy;
+    const formattedToday = yyyy + '-' + mm + '-' + dd;
     return formattedToday
 }
 
@@ -63,7 +63,6 @@ function currentDate() {
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 
-
 // get data from inputform
 app.post("/new-post-form", async function(req, res) {
 
@@ -72,17 +71,17 @@ app.post("/new-post-form", async function(req, res) {
 
     var post = new NewPost(
         params.name,
-        'image id',
+        1,
         currentDate(),
         params.category.length === 2 ? params.category[0] : params.category, 
         params.category.length == 2 ? params.category[1] : '',
         params.description,
-        'UID',
+        1,
         params.location
     )
 
     try {
-        await post.storePostInDatabase(post)
+        await post.addPostToDatabase();
         res.redirect('/userprofile');
 
     } catch(error) {
