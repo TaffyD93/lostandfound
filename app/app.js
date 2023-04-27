@@ -43,6 +43,21 @@ app.get("/userprofile", function(req, res) {
     })
 });
 
+// source: https://stackoverflow.com/questions/12409299/how-to-get-current-formatted-date-dd-mm-yyyy-in-javascript-and-append-it-to-an-i
+function currentDate() {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    let mm = today.getMonth() + 1; // Months start at 0!
+    let dd = today.getDate();
+
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+
+    const formattedToday = dd + '/' + mm + '/' + yyyy;
+
+    return formattedToday
+}
+
 // npm i body-parser 
 // make data from form readable => CHANGE TO MULTER WITH IMAGE
 // remove before merge
@@ -51,21 +66,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // get data from inputform
 app.post("/new-post-form", async function(req, res) {
-    
-    /* 
-        1. find way to access user ID
-    */
-     
     // params from form (attributes)
     params = req.body
- 
+    
     var post = new NewPost(
         params.name,
-        'DD/MM/YYYY',
+        'image id',
+        currentDate(),
         'CATEGORY',
         'CATEGORY2',
-        'UID',
         params.description,
+        'UID',
         params.location
     )
 
