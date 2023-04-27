@@ -30,26 +30,23 @@ block content
         label.new-post-input-item(for="description") Description
         input(type="text", name="description")
 
+        h4.category-title Chose category(s) for item (max 2)
         section.new-post-checkboxes
           // Make buttons instead 
           div.new-post-checkbox 
-            input(type="checkbox" name="clothes")
+            input(type="checkbox" name="category" value="clothing")
             label(for="clothes") Clothing
 
           div.new-post-checkbox 
-            input(type="checkbox" name="electronics")
+            input(type="checkbox" name="category" value="electronics")
             label(for="electronics") Electronics
 
           div.new-post-checkbox 
-            input(type="checkbox" name="sport-equp")
+            input(type="checkbox" name="category" value="sport-equp")
             label(for="sport-equp") Sport Equip.
 
           div.new-post-checkbox 
-            input(type="checkbox" name="student-id")
-            label(for="student-id") Student ID
-
-          div.new-post-checkbox 
-            input(type="checkbox" name="clothes")
+            input(type="checkbox" name="category" value="clothes")
             label(for="other") Other
 
         button.new-post-input-button(type="submit") POST

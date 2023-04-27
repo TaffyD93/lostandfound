@@ -54,7 +54,6 @@ function currentDate() {
     if (mm < 10) mm = '0' + mm;
 
     const formattedToday = dd + '/' + mm + '/' + yyyy;
-
     return formattedToday
 }
 
@@ -64,24 +63,23 @@ function currentDate() {
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 
+
 // get data from inputform
 app.post("/new-post-form", async function(req, res) {
+
     // params from form (attributes)
     params = req.body
-    
+
     var post = new NewPost(
         params.name,
         'image id',
         currentDate(),
-        'CATEGORY',
-        'CATEGORY2',
+        params.category.length === 2 ? params.category[0] : params.category, 
+        params.category.length == 2 ? params.category[1] : '',
         params.description,
         'UID',
         params.location
     )
-
-    console.log('params', params)
-    console.log('body', req.body)
 
     try {
         await post.storePostInDatabase(post)
