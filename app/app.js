@@ -18,18 +18,20 @@ app.set('views', './app/views');
 app.use(express.static('styles'))
 
 // Add static files location
-app.use(express.static("static"));
+app.use(express.static('static'));
+app.use(express.static('public/images/uploads'));
+
 
 // Get the functions in the db.js file to use
 const db = require('./services/db');
 
 // Create a route for root - /
 app.get("/", function(req, res) {
-    var sql = 'select * from Posts';
-    db.query(sql).then(results => {
-        // send results to index template
-        res.render('index', {data: results})
-    })
+  var sql = 'SELECT Posts.*, images.path AS image_path FROM Posts LEFT JOIN images ON Posts.image_id = images.id';
+  db.query(sql).then(results => {
+    // send results to index template
+    res.render('index', { data: results, imagePath: results[0].image_path });
+  })
 });
 
 // Create a route for userprofile
@@ -48,7 +50,7 @@ app.get("/userprofile", function(req, res) {
 const storage = multer.diskStorage({
     // Specify the directory where uploaded files will be saved
     destination: (req, file, cb) => {
-      cb(null, 'public/images/uploads')
+      cb(null, 'public')
     },
     // Generate a unique file name for the uploaded file
     filename: (req, file, cb) => {
@@ -66,6 +68,7 @@ const storage = multer.diskStorage({
       // Insert the file path into the database
       const { path } = req.file;
       await query('INSERT INTO images (path) VALUES (?)', [path]);
+       //console.log('path', path)
       // Send a success response to the client
       res.status(200).json({ message: 'Image uploaded successfully' });
     } catch (error) {

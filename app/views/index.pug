@@ -39,12 +39,12 @@ block content
                 <input type="file" name="image" />
                 <button type="submit">Upload</button>
               </form>
-              if imagePath
-                img(src=`/${imagePath}`)
-                input(type='submit', value='Post')
+              if item.image_path
+                - console.log(item.image_path)
+                img(src=`${item.image_path}` alt=`${item.image_path}`)
             .post-text
               .post-location
                 img(src='public/location.png' width='17' height='20')
                 p #{item.location}
               div #{item.date}
-    script(src='public/filtering.js')
+        script(src='public/filtering.js')
