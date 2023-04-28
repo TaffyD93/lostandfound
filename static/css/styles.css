@@ -531,6 +531,10 @@ ul{
   cursor: pointer;
 }
 
+.category-title {
+  color: white;
+}
+
 .new-post-input-button:hover {
   background-color: var(--main-color);
 }
