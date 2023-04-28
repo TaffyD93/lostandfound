@@ -1,5 +1,8 @@
 // Import express.js
 const express = require("express");
+const multer = require('multer');
+const path = require('path');
+const { query } = require('./services/db');
 
 /* // add routing
 const router = express.Router() */
@@ -16,6 +19,7 @@ app.use(express.static('styles'))
 
 // Add static files location
 app.use(express.static("static"));
+app.use(express.static('uploads'));
 
 // get access to newPost module
 const { NewPost } = require("./models/newPost");
@@ -58,17 +62,51 @@ function currentDate() {
 }
 
 // npm i body-parser 
-// make data from form readable => CHANGE TO MULTER WITH IMAGE
-// remove before merge
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // get data from inputform
 app.post("/new-post-form", async function(req, res) {
 
+    
+
+    try {
+        await post.addPostToDatabase();
+        res.redirect('/userprofile');
+
+    } catch(error) {
+        console.log('error', error.message)
+    }   
+});
+
+/******** UPLOAD IMAGE  *********/
+// Configure the storage engine for multer, which is used to handle file uploads
+const storage = multer.diskStorage({
+    // Specify the directory where uploaded files will be saved
+    destination: (req, file, cb) => {
+      cb(null, 'uploads')
+    },
+    // Generate a unique file name for the uploaded file
+    filename: (req, file, cb) => {
+      const fileName = file.originalname.toLowerCase().split(' ').join('-');
+      cb(null, fileName)
+    }
+});
+  
+  // Create a multer instance with the storage engine configuration
+  const upload = multer({ storage: storage });
+
+  function reformatPath(path) {
+    let formatted = path.replace("uploads/", "")
+    console.log("formatted", formatted)
+    return formatted
+}
+  
+  // Define an endpoint for handling image uploads
+  app.post('/upload', upload.single('image'), async (req, res) => {
+    
     // params from form (attributes)
     params = req.body
-
     var post = new NewPost(
         params.name,
         1,
@@ -81,12 +119,21 @@ app.post("/new-post-form", async function(req, res) {
     )
 
     try {
-        await post.addPostToDatabase();
-        res.redirect('/userprofile');
+      // Insert the file path into the database
+      const { path } = req.file;
+      const reformattedPath = reformatPath(path)
 
-    } catch(error) {
-        console.log('error', error.message)
-    }   
+      await query('INSERT INTO images (path) VALUES (?)', [reformattedPath]); // add image to img table
+      await post.addPostToDatabase(); // add new post to post table
+      res.render('userprofile', {reformattedPath});
+      // Send a success response to the client
+      //res.status(200).json({ message: 'Image uploaded successfully' });
+      
+    } catch (error) {
+      // Handle any errors that occur during the file upload or database insertion
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
 });
 
 
