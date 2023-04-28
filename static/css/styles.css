@@ -477,6 +477,16 @@ ul{
 }
 
 /* NEW POST */
+#newPostForm {
+  visibility: hidden;
+}
+
+#exitNewPost {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 .new-post {
   display: flex;
   align-items: center;

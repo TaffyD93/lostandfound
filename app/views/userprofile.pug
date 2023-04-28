@@ -7,13 +7,15 @@ block content
           h2 Settings
           h1 My Posts
           
-          button#make-new-post-btn(onclick="makeNewPost()")
+          button#make-new-post-btn
             img(src='public/images/addIcon.png' width='95' height='95')
     
-    section.new-post
+    section#newPostForm.new-post
       div.new-post-header
         h3.new-post-title NEW POST
-        img.new-post-exit(src='public/images/exit.png' width='50' height='50')
+
+        button#exitNewPost
+          img.new-post-exit(src='public/images/exit.png' width='50' height='50')
       
       // current uploaded image here
       img#uploadedImage.new-post-img(src=reformattedPath) 
@@ -50,7 +52,7 @@ block content
             input(type="checkbox" name="category" value="clothes")
             label(for="other") Other
 
-        button.new-post-input-button(type="submit") POST
+        button#submitForm.new-post-input-button(type="submit") POST
 
     // Sidebar container
     #sidebar-user
