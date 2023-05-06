@@ -119,15 +119,18 @@ app.get("/", function(req, res) {
 //     })
 // });
 
+
 app.get('/userprofile/:uid', function(req, res) {
-    
-    console.log('you reach u/uid!!!!')
-    var sql = 'select * from Posts';
-    db.query(sql).then(results => {
-        // send results to index template
-        res.render('userprofile', {data: results})
+    var sql = 'SELECT * FROM Posts WHERE Posts.userid = ?';
+    db.query(sql, [req.params.uid]).then(
+        function(dbResult) {
+            // send results to index template
+            res.render('userprofile', {data: dbResult})
     })
 });
+
+
+
 
 // Start server on port 3000
 app.listen(3000,function(){
