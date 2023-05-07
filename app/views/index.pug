@@ -34,7 +34,7 @@ block content
           .post-box(data-category=item.category, data-category2=item.category2, data-type=item.type)
             h2 #{item.item_name}
             .post-box-image 
-              p image goes here 
+              img(src=item.path width='100')
             .post-text
               .post-location
                 img(src='public/images/location.png' width='17' height='20')

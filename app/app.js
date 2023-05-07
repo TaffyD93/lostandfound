@@ -29,7 +29,7 @@ const db = require('./services/db');
 
 // Create a route for root - /
 app.get("/", function(req, res) {
-    var sql = 'select * from Posts';
+    var sql = 'SELECT Posts.*, images.path FROM Posts LEFT JOIN images ON Posts.image_id = images.id';
     db.query(sql).then(results => {
         // send results to index template
         res.render('index', {data: results})
@@ -67,9 +67,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // get data from inputform
 app.post("/new-post-form", async function(req, res) {
-
-    
-
     try {
         await post.addPostToDatabase();
         res.redirect('/userprofile');
@@ -96,34 +93,31 @@ const storage = multer.diskStorage({
   // Create a multer instance with the storage engine configuration
   const upload = multer({ storage: storage });
 
-  function reformatPath(path) {
-    let formatted = path.replace("uploads/", "")
-    console.log("formatted", formatted)
-    return formatted
-}
+  
   
   // Define an endpoint for handling image uploads
   app.post('/upload', upload.single('image'), async (req, res) => {
-    
-    // params from form (attributes)
-    params = req.body
-    var post = new NewPost(
+    try {
+      // Insert the file path into the database
+      const path = req.file;
+      const reformattedPath = path.replace("uploads/", "")
+
+      const result = await query('INSERT INTO images (path) VALUES (?)', [reformattedPath]); // add image to img table
+      const imageId = result.insertId;
+
+      // params from form (attributes)
+      const params = req.body
+      var post = new NewPost(
         params.name,
-        1,
+        imageId,
         currentDate(),
         params.category.length === 2 ? params.category[0] : params.category, 
-        params.category.length == 2 ? params.category[1] : '',
+        params.category.length === 2 ? params.category[1] : '',
         params.description,
         1,
         params.location
-    )
+      )
 
-    try {
-      // Insert the file path into the database
-      const { path } = req.file;
-      const reformattedPath = reformatPath(path)
-
-      await query('INSERT INTO images (path) VALUES (?)', [reformattedPath]); // add image to img table
       await post.addPostToDatabase(); // add new post to post table
       res.render('userprofile', {reformattedPath});
       // Send a success response to the client

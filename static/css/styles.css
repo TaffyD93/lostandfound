@@ -375,8 +375,6 @@ input[type="submit"]:hover {
 }
 
 .post-box-image {
-  background-color: white;
-  height: 190px;
   border-radius: 4px;
 }
 
