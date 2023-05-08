@@ -1,5 +1,5 @@
 // Get the functions in the db.js file to use
-const db = require('../app/services/db');
+const db = require('../services/db');
 
 class NewPost {
 
@@ -31,6 +31,7 @@ class NewPost {
     async addPostToDatabase() {
         // var sql = `INSERT INTO Posts(item_name, image_id, date, category, category2, description, userid, location, found) VALUES (${this.item_name}, ${this.image_id}, ${this.date}, ${this.category}, ${this.category2}, ${this.userid}, ${this.location}, ${this.found})`;
         var sql = "INSERT INTO Posts(item_name, image_id, date, category, category2, description, userid, location, found) VALUES (?,?,?,?,?,?,?,?,?)";
+        console.log(this.item_name, this.image_id, this.date, this.category, this.category2, this.description, this.userid, this.location, this.found);
         const result = await db.query(sql, [this.item_name, this.image_id, this.date, this.category, this.category2, this.description, this.userid, this.location, this.found]); // insert into db
         console.log('result', result)
         return true;

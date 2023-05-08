@@ -1,5 +1,5 @@
 // Get the functions in the db.js file to use
-const db = require('../app/services/db');
+const db = require('../services/db');
 const bcrypt = require("bcryptjs");
 
 

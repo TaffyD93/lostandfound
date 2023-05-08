@@ -44,3 +44,4 @@ exitNewPost.addEventListener('click', toggleNewPostForm)
 submitButton.addEventListener('click', toggleNewPostForm)
 
 input.addEventListener('change', previewUploadedImage) 
+

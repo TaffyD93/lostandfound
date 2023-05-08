@@ -1,8 +1,6 @@
 // Import express.js
 const express = require("express");
-
 const multer = require('multer');
-
 const path = require('path');
 const { query } = require('./services/db');
 
@@ -19,16 +17,13 @@ app.set('views', './app/views');
 var session = require('express-session');
 app.use(session({
   secret: 'secretkeysdfjsflyoifasd',
-  resave: false,
+  resave: false, 
   saveUninitialized: true,
   cookie: { secure: false }
 }));
 
 // User import
-const { User } = require("../models/user");
-
-// get access to newPost module
-const { NewPost } = require("../models/newPost");
+const { User } = require("./models/user");
 
 // Add css styling
 /* app.use(express.static('styles', './app/styles')) */
@@ -38,7 +33,8 @@ app.use(express.static('styles'))
 app.use(express.static("static"));
 app.use(express.static('uploads'));
 
-
+// get access to newPost module
+const { NewPost } = require("./models/newPost");
 
 // Get the functions in the db.js file to use
 const db = require('./services/db');
@@ -109,7 +105,7 @@ app.post('/authenticate', async function (req, res) {
 
 // Create a route for root - /
 app.get("/", function(req, res) {
-    var sql = 'select * from Posts';
+    var sql = 'SELECT Posts.*, images.path FROM Posts LEFT JOIN images ON Posts.image_id = images.id';
     db.query(sql).then(results => {
         // send results to index template
         res.render('index', {data: results})
@@ -142,6 +138,18 @@ function currentDate() {
     return formattedToday
 }
 
+
+// get data from inputform
+app.post("/new-post-form", async function(req, res) {
+    try {
+        await post.addPostToDatabase();
+        res.redirect('/userprofile/2');
+
+    } catch(error) {
+        console.log('error', error.message)
+    }   
+});
+
 /******** UPLOAD IMAGE  *********/
 // Configure the storage engine for multer, which is used to handle file uploads
 const storage = multer.diskStorage({
@@ -159,41 +167,37 @@ const storage = multer.diskStorage({
   // Create a multer instance with the storage engine configuration
   const upload = multer({ storage: storage });
 
-  function reformatPath(path) {
-    let formatted = path.replace("uploads/", "")
-    console.log("formatted", formatted)
-    return formatted
-}
+  
   
   // Define an endpoint for handling image uploads
   app.post('/upload', upload.single('image'), async (req, res) => {
-    
-    // params from form (attributes)
-    params = req.body
-    const path = req.file;
-    console.log(params.name)
-    console.log('the path is: ', path)
+    try {
+      // Insert the file path into the database
+      const path = req.file.filename;
+      const reformattedPath = path.replace("uploads/", "");
 
-    var post = new NewPost(
+      console.log(reformattedPath);
+
+      const result = await query('INSERT INTO images (path) VALUES (?)', [reformattedPath]); // add image to img table
+      const imageId = result.insertId;
+
+      // params from form (attributes)
+      const params = req.body
+      var post = new NewPost(
         params.name,
-        reformatPath(path),
+        imageId,
         currentDate(),
         params.category.length === 2 ? params.category[0] : params.category, 
         params.category.length === 2 ? params.category[1] : '',
         params.description,
         1,
         params.location,
-        0
-    )
+        1
+      )
 
-    try {
-      // Insert the file path into the database 
-      const { path } = req.file;
-      const reformattedPath = reformatPath(path)
-
-      await query('INSERT INTO images (path) VALUES (?)', [reformattedPath]); // add image to img table
       await post.addPostToDatabase(); // add new post to post table
-      res.render('userprofile', {reformattedPath});
+      res.redirect('/');
+      // res.render('userprofile', {data:reformattedPath});
       // Send a success response to the client
       //res.status(200).json({ message: 'Image uploaded successfully' });
       
