@@ -1,12 +1,58 @@
 extends layout
 block content
-  test 
+
     // Main container
     main
       section#user-hero
           h2 Settings
           h1 My Posts
-          img(src='public/Untitled.png' width='95' height='95')
+          
+          button#make-new-post-btn
+            img(src='public/images/addIcon.png' width='95' height='95')
+    
+    section#newPostForm.new-post
+      div.new-post-header
+        h3.new-post-title NEW POST
+
+        button#exitNewPost
+          img.new-post-exit(src='public/images/exit.png' width='50' height='50')
+      
+      // current uploaded image here
+      img#uploadedImage.new-post-img(src=reformattedPath) 
+
+      // enctype => multipart/form-data for images upload 
+      form.new-post-input(action="/upload", method="POST" enctype="multipart/form-data") 
+        input#uploadImage(type="file" name="image") 
+
+        label.new-post-input-item(for="name") Item Name 
+        input(type="text", name="name")
+
+        label.new-post-input-item(for="location") Location 
+        input(type="text", name="location")
+
+        label.new-post-input-item(for="description") Description
+        input(type="text", name="description")
+
+        h4.category-title Chose category(s) for item (max 2)
+        section.new-post-checkboxes
+          // Make buttons instead 
+          div.new-post-checkbox 
+            input(type="checkbox" name="category" value="clothing")
+            label(for="clothes") Clothing
+
+          div.new-post-checkbox 
+            input(type="checkbox" name="category" value="electronics")
+            label(for="electronics") Electronics
+
+          div.new-post-checkbox 
+            input(type="checkbox" name="category" value="sport-equp")
+            label(for="sport-equp") Sport Equip.
+
+          div.new-post-checkbox 
+            input(type="checkbox" name="category" value="clothes")
+            label(for="other") Other
+
+        button#submitForm.new-post-input-button(type="submit") POST
 
     // Sidebar container
     #sidebar-user
@@ -28,15 +74,16 @@ block content
             |  Downotes
             
     // make posts clickable
-    .posts
-      Posts
-      for item in data
-        .post-box
-          h2 #{item.item_name}
-          .post-box-image 
-            p image goes here 
-          .post-text
-            .post-location
-              img(src='public/location.png' width='17' height='20')
-              p #{item.location}
-            div #{item.date}
+    .posts#post-container
+        // Posts
+        for item in data
+          .post-box(data-category=item.category, data-category2=item.category2, data-type=item.type)
+            h2 #{item.item_name}
+            .post-box-image 
+              p image goes here 
+            .post-text
+              .post-location
+                img(src='public/location.png' width='17' height='20')
+                p #{item.location}
+              div #{item.date}
+    script(src='/public/newPost.js')
