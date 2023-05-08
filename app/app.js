@@ -99,7 +99,7 @@ const storage = multer.diskStorage({
   app.post('/upload', upload.single('image'), async (req, res) => {
     try {
       // Insert the file path into the database
-      const path = req.file;
+      const path = req.file.filename;
       const reformattedPath = path.replace("uploads/", "")
 
       const result = await query('INSERT INTO images (path) VALUES (?)', [reformattedPath]); // add image to img table

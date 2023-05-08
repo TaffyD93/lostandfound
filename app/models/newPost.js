@@ -25,7 +25,7 @@ class NewPost {
         this.location = location;
     }
 
-    // push new post to posts tabel in db
+    // push new post to posts table in db
     async addPostToDatabase() {
         // var sql = `INSERT INTO Posts(item_name, image_id, date, category, category2, description, userid, location) VALUES (${this.item_name}, ${this.image_id}, ${this.date}, ${this.category}, ${this.category2}, ${this.userid}, ${this.location})`;
         var sql = "INSERT INTO Posts(item_name, image_id, date, category, category2, description, userid, location) VALUES (?,?,?,?,?,?,?,?)";
