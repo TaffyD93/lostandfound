@@ -4,9 +4,6 @@ const multer = require('multer');
 const path = require('path');
 const { query } = require('./services/db');
 
-/* // add routing
-const router = express.Router() */
-
 // Create express app
 var app = express();
 
@@ -25,20 +22,19 @@ app.use(session({
 // User import
 const { User } = require("./models/user");
 
-// Add css styling
-/* app.use(express.static('styles', './app/styles')) */
+// get access to newPost module
+const { NewPost } = require("./models/newPost");
+
 app.use(express.static('styles'))
 
 // Add static files location
 app.use(express.static("static"));
 app.use(express.static('uploads'));
 
-// get access to newPost module
-const { NewPost } = require("./models/newPost");
-
 // Get the functions in the db.js file to use
 const db = require('./services/db');
 
+// access data from forms in login/register 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -47,10 +43,10 @@ app.get('/register', function (req, res) {
     res.render('register');
 });
 
+// set password for new user
 app.post('/set-password', async function (req, res) {
     params = req.body;
     var user = new User(params.email);
-    console.log(user)
     try {
         user.getIdFromEmail().then( uId => {
             if (uId) {
@@ -76,7 +72,6 @@ app.get('/login', function (req, res) {
     res.render('login');
 });
 
-
 // Check submitted email and password pair
 app.post('/authenticate', async function (req, res) {
     params = req.body;
@@ -88,10 +83,9 @@ app.post('/authenticate', async function (req, res) {
             if (match) {
                 req.session.uid = uId;
                 req.session.loggedIn = true;
-                res.redirect('/userprofile/' + uId);
+                res.redirect('/userprofile/' + uId); // dynamic routing to current user's profile
             }
             else {
-                // TODO improve the user journey here
                 res.send('invalid password');
             }
         }
@@ -103,7 +97,7 @@ app.post('/authenticate', async function (req, res) {
     }
 });
 
-// Create a route for root - /
+// Route for index
 app.get("/", function(req, res) {
     var sql = 'SELECT Posts.*, images.path FROM Posts LEFT JOIN images ON Posts.image_id = images.id';
     db.query(sql).then(results => {
@@ -112,9 +106,7 @@ app.get("/", function(req, res) {
     })
 });
 
-// Create a route for userprofile
-// => "/userprofile/:username"
-// Create a route for root - /
+// dynamic routing for current user
 app.get('/userprofile/:uid', function(req, res) {
   var sql = 'SELECT * FROM Posts WHERE Posts.userid = ?';
   db.query(sql, [req.params.uid]).then(
@@ -138,19 +130,6 @@ function currentDate() {
     return formattedToday
 }
 
-
-// get data from inputform
-app.post("/new-post-form", async function(req, res) {
-    try {
-        await post.addPostToDatabase();
-        res.redirect('/userprofile/2');
-
-    } catch(error) {
-        console.log('error', error.message)
-    }   
-});
-
-/******** UPLOAD IMAGE  *********/
 // Configure the storage engine for multer, which is used to handle file uploads
 const storage = multer.diskStorage({
     // Specify the directory where uploaded files will be saved
@@ -164,26 +143,22 @@ const storage = multer.diskStorage({
     }
 });
   
-  // Create a multer instance with the storage engine configuration
-  const upload = multer({ storage: storage });
+// Create a multer instance with the storage engine configuration
+const upload = multer({ storage: storage });
 
-  
-  
-  // Define an endpoint for handling image uploads
-  app.post('/upload', upload.single('image'), async (req, res) => {
-    try {
-      // Insert the file path into the database
-      const path = req.file.filename;
-      const reformattedPath = path.replace("uploads/", "");
+// Endpoint for make new post form AND handling image uploads
+app.post('/upload', upload.single('image'), async (req, res) => {
+try {
+    // Insert the file path into the database
+    const path = req.file.filename;
+    const reformattedPath = path.replace("uploads/", "");
 
-      console.log(reformattedPath);
+    const result = await query('INSERT INTO images (path) VALUES (?)', [reformattedPath]); // add image to img table
+    const imageId = result.insertId;
 
-      const result = await query('INSERT INTO images (path) VALUES (?)', [reformattedPath]); // add image to img table
-      const imageId = result.insertId;
-
-      // params from form (attributes)
-      const params = req.body
-      var post = new NewPost(
+    // make new post with imageid and user id
+    const params = req.body
+    var post = new NewPost(
         params.name,
         imageId,
         currentDate(),
@@ -193,21 +168,17 @@ const storage = multer.diskStorage({
         1,
         params.location,
         1
-      )
+    )
 
-      await post.addPostToDatabase(); // add new post to post table
-      res.redirect('/');
-      // res.render('userprofile', {data:reformattedPath});
-      // Send a success response to the client
-      //res.status(200).json({ message: 'Image uploaded successfully' });
-      
+    await post.addPostToDatabase(); // add new post to post table
+    res.redirect('/');
+    
     } catch (error) {
-      // Handle any errors that occur during the file upload or database insertion
-      console.error(error);
-      res.status(500).json({ message: 'Internal server error' });
+        // Handle any errors that occur during the file upload or database insertion
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
     }
 });
-
 
 // Start server on port 3000
 app.listen(3000,function(){
