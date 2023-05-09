@@ -12,13 +12,10 @@ const preview = document.querySelector('#uploadedImage');
 function toggleNewPostForm() {
     const newPostForm = document.querySelector('#newPostForm');
 
-    console.log('askneflsknf')
     if (newPostForm.style.visibility === 'visible') {
         newPostForm.style.visibility = 'hidden'
-        console.log('hide')
     } else {
             newPostForm.style.visibility = 'visible'
-            console.log('show')
         
     }
 
