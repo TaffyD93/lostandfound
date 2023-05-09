@@ -36,6 +36,7 @@ const db = require('./services/db');
 
 // access data from forms in login/register 
 const bodyParser = require('body-parser');
+const { url } = require("inspector");
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Register
@@ -81,6 +82,11 @@ app.post('/authenticate', async function (req, res) {
         if (uId) {
             match = await user.authenticate(params.password);
             if (match) {
+
+                // update logged in attribuet in db (currentuser)
+                var sql = "UPDATE Users SET loggedIn = ? WHERE Users.id = ?"
+                const result = await db.query(sql, [1, uId]);
+
                 req.session.uid = uId;
                 req.session.loggedIn = true;
                 res.redirect('/userprofile/' + uId); // dynamic routing to current user's profile
@@ -116,20 +122,6 @@ app.get('/userprofile/:uid', function(req, res) {
   })
 });
 
-// source: https://stackoverflow.com/questions/12409299/how-to-get-current-formatted-date-dd-mm-yyyy-in-javascript-and-append-it-to-an-i
-function currentDate() {
-    const today = new Date();
-    const yyyy = today.getFullYear();
-    let mm = today.getMonth() + 1; // Months start at 0!
-    let dd = today.getDate();
-
-    if (dd < 10) dd = '0' + dd;
-    if (mm < 10) mm = '0' + mm;
-
-    const formattedToday = yyyy + '-' + mm + '-' + dd;
-    return formattedToday
-}
-
 // Configure the storage engine for multer, which is used to handle file uploads
 const storage = multer.diskStorage({
     // Specify the directory where uploaded files will be saved
@@ -148,7 +140,9 @@ const upload = multer({ storage: storage });
 
 // Endpoint for make new post form AND handling image uploads
 app.post('/upload', upload.single('image'), async (req, res) => {
+
 try {
+
     // Insert the file path into the database
     const path = req.file.filename;
     const reformattedPath = path.replace("uploads/", "");
@@ -165,12 +159,13 @@ try {
         params.category.length === 2 ? params.category[0] : params.category, 
         params.category.length === 2 ? params.category[1] : '',
         params.description,
-        1,
+        'temp',
         params.location,
         1
     )
 
     await post.addPostToDatabase(); // add new post to post table
+    await post.addCurrentUserToPost() // add later because of async issues
     res.redirect('/');
     
     } catch (error) {
@@ -184,3 +179,19 @@ try {
 app.listen(3000,function(){
     console.log(`Server running at http://127.0.0.1:3000/`);
 });
+
+// get current date
+// source: https://stackoverflow.com/questions/12409299/how-to-get-current-formatted-date-dd-mm-yyyy-in-javascript-and-append-it-to-an-i
+function currentDate() {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    let mm = today.getMonth() + 1; // Months start at 0!
+    let dd = today.getDate();
+
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+
+    const formattedToday = yyyy + '-' + mm + '-' + dd;
+    return formattedToday
+}
+
