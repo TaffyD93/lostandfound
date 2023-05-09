@@ -10,7 +10,7 @@ lerna-debug.log*
 .pnpm-debug.log*
 .lostandfound.sql
 *sql
-uploads/*
+
 
 
 
