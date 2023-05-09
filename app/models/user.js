@@ -2,7 +2,6 @@
 const db = require('../services/db');
 const bcrypt = require("bcryptjs");
 
-
 class User {
 
     // Id of the user
@@ -19,7 +18,6 @@ class User {
     async getIdFromEmail() {
         var sql = "SELECT id FROM Users WHERE Users.email = ?";
         const result = await db.query(sql, [this.email]);
-        console.log ('getIdFromEmail')
     // TODO LOTS OF ERROR CHECKS HERE..
         if (JSON.stringify(result) != '[]') {
             this.id = result[0].id;
@@ -28,7 +26,7 @@ class User {
         else {
             return false;
         }
-}
+    }
 
     // Add a password to an existing user
     async setUserPassword(password) {
@@ -43,7 +41,7 @@ class User {
         const pw = await bcrypt.hash(password, 10);
         var sql = "INSERT INTO Users (email, password) VALUES (? , ?)";
         const result = await db.query(sql, [this.email, pw]);
-        console.log(result.insertId);
+
         this.id = result.insertId;
         return this.id;
     }
@@ -61,8 +59,6 @@ class User {
             return false;
         }
     }
-
-
 }
 
 module.exports  = {

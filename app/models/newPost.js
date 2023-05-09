@@ -31,9 +31,18 @@ class NewPost {
     async addPostToDatabase() {
         // var sql = `INSERT INTO Posts(item_name, image_id, date, category, category2, description, userid, location, found) VALUES (${this.item_name}, ${this.image_id}, ${this.date}, ${this.category}, ${this.category2}, ${this.userid}, ${this.location}, ${this.found})`;
         var sql = "INSERT INTO Posts(item_name, image_id, date, category, category2, description, userid, location, found) VALUES (?,?,?,?,?,?,?,?,?)";
-        console.log(this.item_name, this.image_id, this.date, this.category, this.category2, this.description, this.userid, this.location, this.found);
         const result = await db.query(sql, [this.item_name, this.image_id, this.date, this.category, this.category2, this.description, this.userid, this.location, this.found]); // insert into db
-        console.log('result', result)
+        return true;
+    }
+
+    async addCurrentUserToPost() {
+        // get current users id
+        var sql = 'SELECT id FROM Users WHERE Users.loggedIn = ?';
+        const result = await db.query(sql, [1]);
+        const currentuserId = result[0].id.toString()
+
+        var sql2 = "UPDATE Posts SET userid = ? WHERE userid = ?" 
+        const results = await db.query(sql2, [currentuserId, 'temp']) 
         return true;
     }
 }
